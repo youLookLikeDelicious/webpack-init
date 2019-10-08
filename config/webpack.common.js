@@ -2,10 +2,10 @@
   const {CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-  
+
 module.exports = {
 	// 入口js文件的位置
-	entry: "./src/index.js",
+	entry: "./src/js/index.js",
 	output: {
 		path: path.resolve(__dirname, "public"),
 		filename: "bundle.js"
@@ -36,7 +36,7 @@ module.exports = {
      })
    ],
    optimization: {
-	// 压缩js文件的相关设置 
+	// 压缩js文件的相关设置
     minimizer: [new UglifyJsPlugin({
 		uglifyOptions: {
 			ie8: false,
