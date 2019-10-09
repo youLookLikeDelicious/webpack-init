@@ -2,7 +2,7 @@
 ```
     npm init 
 
-    npm i babel-cli @babel/core babel-loader babel-preset-env clean-webpack-plugin html-webpack-plugin uglifyjs-webpack-plugin webpack webpack-cli webpack-dev-server webpack-merge --save-dev
+    npm i babel-cli @babel/core babel-loader babel-preset-env clean-webpack-plugin html-webpack-plugin uglifyjs-webpack-plugin webpack webpack-cli webpack-dev-server webpack-merge style-loader css-loader sass-loader node-sass --save-dev
     
     ...
     package.json 下的相关配置
