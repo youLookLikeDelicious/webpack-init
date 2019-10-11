@@ -2,13 +2,15 @@ const path = require('path')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
 	// 入口js文件的位置
 	entry: "./src/js/index.js",
 	output: {
-		path: path.resolve(__dirname, "public"),
-		filename: "bundle.js"
+		path: '/dist/',
+		filename: "bundle.js",
+		// publicPath: "/dist/"		// 在浏览器地址中输入的
 	},
 	module: {
 		rules: [
@@ -41,6 +43,14 @@ module.exports = {
 						loader: 'file-loader?name=./img/[name].[ext]'
 					}
 				]
+			},
+			{
+				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+				use: [
+					{
+						loader: 'file-loader?name=./font/[name].[ext]'
+					}
+				]
 			}
 		]
 	},
@@ -50,17 +60,25 @@ module.exports = {
 		}),
 		// HTML模板的相关设置
 		new HtmlWebpackPlugin({
-			title: 'Animate',
-			template: './src/index.html',
+			title: 'Vue-umeditor',
+			template: './dist/index.html',
 			filename: 'index.html'
-		})
+		}),
+		//  静态资源的设置
+		new CopyPlugin([
+			{
+				from: './static',	// 相对于项目根目录
+				to: 'static/'
+				// flatten: true
+			}
+		]),
 	],
 	optimization: {
 		// 压缩js文件的相关设置
 		minimizer: [new UglifyJsPlugin({
 			uglifyOptions: {
 				ie8: false,
-				output:{
+				output: {
 					comments: false,
 					beautify: false
 				},
@@ -69,4 +87,16 @@ module.exports = {
 			}
 		})]
 	},
+	devServer: {
+		contentBase: path.resolve('../static/'),
+		// compress: true,
+		// port: 8080
+	},
+	// 定义变量
+	resolve: {
+		extensions: ['.js'],
+		alias: {
+			'~': path.resolve(__dirname, '../')	// 将~ 定义为项目根目录
+		}
+	}
 }
